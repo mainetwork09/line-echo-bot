@@ -2,7 +2,7 @@
 
 const express = require('express')
 const bodyParser = require('body-parser')
-const request = require('request')
+const axios = require('axios')
 const app = express()
 const port = process.env.APP_PORT || 4000
 
@@ -20,6 +20,7 @@ app.post('/webhook', (req, res) => {
 })
 app.listen(port)
 function reply(reply_token, msg) {
+	const reply_url = `https://api.line.me/v2/bot/message/reply`;
     let headers = {
         'Content-Type': 'application/json',
         'Authorization': `Bearer ${token}`
@@ -31,11 +32,15 @@ function reply(reply_token, msg) {
             text: msg
         }]
     })
-    request.post({
-        url: 'https://api.line.me/v2/bot/message/reply',
-        headers: headers,
-        body: body
-    }, (err, res, body) => {
-        console.log('status = ' + res.statusCode);
-    });
+		let config = {
+			headers: headers,
+			body: body
+		} 
+		axios.post(reply_url, config)
+			.then((response)=>{
+				console.log(response)
+			})
+			.catch((error)=>{
+				console.log(error)
+			})
 }
