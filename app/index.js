@@ -4,7 +4,7 @@ const express = require('express')
 const bodyParser = require('body-parser')
 const request = require('request')
 const app = express()
-const port = process.env.PORT || 4000
+const port = process.env.APP_PORT || 4000
 
 const secret = process.env.CHANNEL_SECRET
 const token = process.env.CHANNEL_ACCESS_TOKEN
