@@ -12,6 +12,9 @@ const token = process.env.CHANNEL_ACCESS_TOKEN
 
 app.use(bodyParser.urlencoded({ extended: false }))
 app.use(bodyParser.json())
+app.get('/', (req, res) =>{
+	res.send(`Hello`)
+})
 app.post('/webhook', (req, res) => {
     let reply_token = req.body.events[0].replyToken
     let msg = req.body.events[0].message.text
@@ -19,6 +22,7 @@ app.post('/webhook', (req, res) => {
     res.sendStatus(200)
 })
 app.listen(port)
+
 function reply(reply_token, msg) {
 	const reply_url = `https://api.line.me/v2/bot/message/reply`;
     let headers = {
